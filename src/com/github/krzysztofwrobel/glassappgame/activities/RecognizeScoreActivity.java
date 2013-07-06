@@ -57,8 +57,9 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
 	private String recognizedKey;
     
     private int failCounter;
+    private Reward completedChallangeReward = null;
 
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -105,7 +106,8 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
         };
         Challenge completedChallange = getIntent().getParcelableExtra("challenge");
         if(completedChallange!=null && completedChallange.getReward()!=null){
-            onRewardReceived(completedChallange.getReward());
+            completedChallangeReward = completedChallange.getReward();
+            onRewardReceived(completedChallangeReward);
         } else {
 		    makePhoto();
         }
@@ -311,6 +313,7 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
 	public boolean onSingleTapUp(MotionEvent e)
 	{
 		Intent scoreOptions = new Intent(this, ScoreOptionsActivity.class);
+        scoreOptions.putExtra("reward",completedChallangeReward);
 		startActivity(scoreOptions);
 		return true;
 	}
