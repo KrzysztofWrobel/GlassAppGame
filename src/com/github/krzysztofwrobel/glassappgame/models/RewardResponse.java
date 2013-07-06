@@ -18,4 +18,11 @@ public class RewardResponse extends StdResponse {
 	public void setReward(Reward reward) {
 		this.reward = reward;
 	}
+
+	@Override
+	public String toString() {
+		return "RewardResponse{" +
+				"reward=" + reward +
+				'}';
+	}
 }

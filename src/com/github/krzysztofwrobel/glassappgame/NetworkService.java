@@ -34,6 +34,9 @@ public class NetworkService extends IntentService {
 	private final LocalBroadcastManager mLocalBroadcastManager;
 	private BackendAPI service;
 
+	// TODO get from settings
+	private final String userLogin = "player1";
+
 	public NetworkService() {
 		super("NetworkService");
 
@@ -55,7 +58,7 @@ public class NetworkService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		String action = intent.getAction();
-		Bundle params = intent.getExtras();
+		Bundle params = intent.getBundleExtra("params");
 		if (params == null)
 			params = new Bundle();
 
@@ -68,7 +71,7 @@ public class NetworkService extends IntentService {
 				in.putExtra("error", resp.isError());
 				mLocalBroadcastManager.sendBroadcast(in);
 			} else if (ACTION_CHALLENGES.equals(action)) {
-				ChallengesResponse challenges = service.challenges();
+				ChallengesResponse challenges = service.challenges(userLogin);
 
 				Intent in = new Intent();
 				in.setAction(action);
@@ -77,9 +80,9 @@ public class NetworkService extends IntentService {
 				mLocalBroadcastManager.sendBroadcast(in);
 			} else if (ACTION_CHALLENGE_COMPLETE.equals(action)) {
 				String challenge_id = params.getString("id", "default-random-id");
-				String login = params.getString("login", Long.toString(System.currentTimeMillis()));
 
-				RewardResponse rewardResponse = service.challenges_complete(login, challenge_id);
+				RewardResponse rewardResponse = service.challenges_complete(userLogin, challenge_id);
+				Log.d(TAG, "rewardResponse=" + rewardResponse);
 
 				Intent in = new Intent();
 				in.setAction(action);
@@ -99,6 +102,7 @@ public class NetworkService extends IntentService {
 		Log.d(TAG, "run=" + action);
 		Intent in = new Intent(ctx, NetworkService.class);
 		in.setAction(action);
+
 		if (params == null) {
 			params = new Bundle();
 		}
