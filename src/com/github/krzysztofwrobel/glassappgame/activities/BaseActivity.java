@@ -1,5 +1,8 @@
 package com.github.krzysztofwrobel.glassappgame.activities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -14,14 +17,18 @@ import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
 import android.widget.TextView;
 
+import com.github.krzysztofwrobel.glassappgame.GlassApplication;
 import com.github.krzysztofwrobel.glassappgame.R;
 import com.github.krzysztofwrobel.glassappgame.anim.CenterAnimation;
+import com.github.krzysztofwrobel.glassappgame.models.Challenge;
 
 
 public abstract class BaseActivity extends FragmentActivity implements LocationListener
 {
 	
 	private final static boolean DEBUG = true;
+	
+	private GlassApplication app;
 	
 	private boolean mReceiveLocationUpdates;
 
@@ -35,6 +42,7 @@ public abstract class BaseActivity extends FragmentActivity implements LocationL
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		onCreate(savedInstanceState, false);
+		app = (GlassApplication) getApplication();
 	}
 	
 	protected void onCreate(Bundle savedInstanceState, boolean receiveLocationUpdates)
@@ -151,4 +159,14 @@ public abstract class BaseActivity extends FragmentActivity implements LocationL
 		startActivity(intent);
 	}
 
+	public List<Challenge> getChallenges()
+	{
+		return app.getChallenges();
+	}
+
+	public void setChallenges(List<Challenge> mChallenges)
+	{
+		app.setChallenges(mChallenges);
+	}
+	
 }

@@ -24,6 +24,7 @@ import com.github.krzysztofwrobel.glassappgame.fragments.HomeSlideFragment;
 import com.github.krzysztofwrobel.glassappgame.models.Challenge;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends BaseActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
@@ -34,7 +35,6 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     private FragmentManager mSupportFragmentManager;
     private LocalBroadcastManager mLocalBroadcastManager;
     private BroadcastReceiver mLocalReceiver;
-    private ArrayList<Challenge> mChallenges;
     
     private int failCounter;
 
@@ -49,8 +49,6 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         gestureDetector.setOnDoubleTapListener(this);
 
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
-
-        mChallenges = new ArrayList<Challenge>();
 
         mSlideViewPager = (ViewPager) findViewById(R.id.vp_home_slides);
         mSlidePagerAdapter = new ScreenSlidePagerAdapter(mSupportFragmentManager);
@@ -85,15 +83,16 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
                         return;
                     } else {
 
-                        mChallenges = intent.getParcelableArrayListExtra("challenges");
-                        for (int i = 0; i < mChallenges.size(); i++) {
-                            mSlidePagerAdapter.addSlideFragment(HomeSlideFragment.getInstance(mChallenges.get(i)));
+                        List<Challenge> challenges = intent.getParcelableArrayListExtra("challenges");
+                        for (int i = 0; i < challenges.size(); i++) {
+                            mSlidePagerAdapter.addSlideFragment(HomeSlideFragment.getInstance(challenges.get(i)));
                         }
                         mSlidePagerAdapter.notifyDataSetChanged();
+                        setChallenges(challenges);
+                        Log.d(TAG, "onReceive=" + challenges);
                     }
 
                     dismissInfoDialog();
-                    Log.d(TAG, "onReceive=" + mChallenges);
                 }
             }
         };

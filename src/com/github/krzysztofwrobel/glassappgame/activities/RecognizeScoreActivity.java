@@ -2,6 +2,7 @@ package com.github.krzysztofwrobel.glassappgame.activities;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 
 import com.github.krzysztofwrobel.glassappgame.NetworkService;
 import com.github.krzysztofwrobel.glassappgame.R;
+import com.github.krzysztofwrobel.glassappgame.models.Challenge;
 import com.github.krzysztofwrobel.glassappgame.models.Reward;
 import com.squareup.picasso.Picasso;
 
@@ -51,6 +53,8 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
     private TextView scoreTitleTextView;
     private TextView rewardDescriptionTextView;
     private ImageView rewardImageView;
+	
+	private String recognizedKey;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -87,6 +91,12 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
 
     private void onRewardReceived(Reward receivedReward) {
         if(receivedReward!=null){
+        	List<Challenge> challenges = getChallenges();
+        	for(Challenge c : challenges)
+        	{
+        		if(c.getId().equals(recognizedKey))
+        			c.getId();//TODO change to finished
+        	}
             scoreTitleTextView.setText("You've got a Reward!");
             rewardDescriptionTextView.setText(receivedReward.getDescription());
             Picasso.with(this).load(receivedReward.getImage_link()).resize(640, 320).into(rewardImageView);
@@ -257,6 +267,7 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
 	
 	private void onRecognized(String key)
 	{
+		recognizedKey = key;
 		Bundle params = new Bundle();
 		params.putString("id", key);
 		NetworkService.run(this, NetworkService.ACTION_CHALLENGE_COMPLETE, params);
