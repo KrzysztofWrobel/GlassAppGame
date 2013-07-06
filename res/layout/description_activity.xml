@@ -1,7 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+    <TextView
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:id="@+id/tv_decription_title"
+            android:textSize="30dp"
+            android:layout_weight="1"/>
 
-</AbsoluteLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:orientation="horizontal">
+        <TextView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:id="@+id/tv_decription_full"
+                android:textSize="30dp"
+                android:layout_weight="1"/>
+
+        <TextView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:id="@+id/tv_friend_achivments"
+                android:textSize="30dp"
+                android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+</LinearLayout>
