@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame;
+package com.hackato.GlassAppGame.activities;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -22,7 +22,10 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hackato.GlassAppGame.activities.BaseActivity;
+import com.hackato.GlassAppGame.R;
+import com.hackato.GlassAppGame.R.id;
+import com.hackato.GlassAppGame.R.layout;
+import com.hackato.GlassAppGame.R.string;
 
 public class RecognizeActivity extends BaseActivity
 {

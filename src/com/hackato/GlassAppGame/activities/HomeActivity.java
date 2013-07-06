@@ -1,5 +1,6 @@
 package com.hackato.GlassAppGame.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
@@ -107,7 +108,8 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public void onLongPress(MotionEvent e) {
         Log.d("Gesture Example", "onLongPress");
-        Toast.makeText(getApplicationContext(), "Long Press", Toast.LENGTH_SHORT).show();
+        Intent recognize = new Intent(this, RecognizeActivity.class);
+        startActivity(recognize);
     }
 
     @Override
