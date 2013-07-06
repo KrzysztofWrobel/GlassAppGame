@@ -7,4 +7,8 @@ import java.util.ArrayList;
  */
 public class ChallengesResponse extends StdResponse {
 	private ArrayList<Challenge> challenges;
+
+	public ArrayList<Challenge> getChallenges() {
+		return challenges;
+	}
 }
