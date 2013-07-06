@@ -19,6 +19,13 @@ public class HomeActivity extends Activity implements GestureDetector.OnGestureL
 
     }
 
+    //We need this to ensure it works on normal android devices
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
