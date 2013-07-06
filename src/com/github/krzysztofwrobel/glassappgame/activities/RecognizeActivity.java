@@ -62,6 +62,7 @@ public class RecognizeActivity extends BaseActivity
                     } else {
 
                         Reward reward = intent.getParcelableExtra("reward");
+                        onRewardReceived(reward);
                         showInfoDialog(0, reward.getDescription());
                     }
                 }
@@ -69,6 +70,13 @@ public class RecognizeActivity extends BaseActivity
         };
 		makePhoto();
 	}
+
+    private void onRewardReceived(Reward reward) {
+        Intent newIntent = new Intent(this,ScoreActivity.class);
+        newIntent.putExtra("reward",reward);
+        startActivity(newIntent);
+        (this).finish();
+    }
 
     @Override
     protected void onPause() {

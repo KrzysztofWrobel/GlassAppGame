@@ -58,6 +58,17 @@ public class Reward implements Parcelable {
 		return 0;
 	}
 
+    public static final Parcelable.Creator<Reward> CREATOR
+            = new Parcelable.Creator<Reward>() {
+        public Reward createFromParcel(Parcel in) {
+            return new Reward(in);
+        }
+
+        public Reward[] newArray(int size) {
+            return new Reward[size];
+        }
+    };
+
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(id);
