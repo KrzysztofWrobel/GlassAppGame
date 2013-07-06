@@ -1,5 +1,9 @@
 package com.hackato.GlassAppGame.activities;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -9,10 +13,10 @@ import android.widget.AbsoluteLayout;
 import android.widget.TextView;
 
 import com.hackato.GlassAppGame.R;
-import com.hackato.GlassAppGame.anim.*;
+import com.hackato.GlassAppGame.anim.CenterAnimation;
 
 
-public class BaseActivity extends FragmentActivity
+public abstract class BaseActivity extends FragmentActivity implements LocationListener
 {
 	
 	private final static boolean DEBUG = true;
@@ -20,15 +24,40 @@ public class BaseActivity extends FragmentActivity
 	private ViewGroup contentView;
 	private ViewGroup overlayView;	
 	private TextView infoText;
+    
+    private LocationManager mLocationManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
+	{
+		onCreate(savedInstanceState, false);
+	}
+	
+	protected void onCreate(Bundle savedInstanceState, boolean receiveLocationUpdates)
 	{
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.content_and_overlay);
 		contentView = (ViewGroup) findViewById(R.id.content);
 		overlayView = (ViewGroup) findViewById(R.id.overlay);
+	    mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 	}
+    
+    @Override
+    protected void onResume()
+    {
+    	super.onResume();
+    	try {
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1.0f, this);
+		} catch(IllegalArgumentException ignored) {}
+		mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1.0f, this);
+    }
+    
+    @Override
+    protected void onPause()
+    {
+    	mLocationManager.removeUpdates(this);
+    	super.onPause();
+    }
 	
 	@Override
 	public void setContentView(int layoutResID)
@@ -74,6 +103,34 @@ public class BaseActivity extends FragmentActivity
 		if (DEBUG) {
 			Log.v(getClass().getSimpleName(), msg);
 		}
+	}
+
+	@Override
+	public void onLocationChanged(Location location)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,25 +1,23 @@
 package com.hackato.GlassAppGame.activities;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.hackato.GlassAppGame.R;
-import com.hackato.GlassAppGame.activities.BaseActivity;
 import com.hackato.GlassAppGame.fragments.HomeSlideFragment;
 import com.hackato.GlassAppGame.models.Challenge;
-
-import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
 
@@ -30,7 +28,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState, true);
         setContentView(R.layout.home_activity);
 
         mSupportFragmentManager = getSupportFragmentManager();
@@ -49,6 +47,14 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         
 //        showInfoDialog(0, R.string.app_name);
 
+    }
+    
+    @Override
+    public void onLocationChanged(Location location)
+    {
+    	// TODO start connection
+    	int lat = (int)(location.getLatitude() * 1E6);
+    	int lng = (int)(location.getLongitude() * 1E6);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
