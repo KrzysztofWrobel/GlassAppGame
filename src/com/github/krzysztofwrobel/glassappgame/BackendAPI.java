@@ -16,8 +16,8 @@ public interface BackendAPI {
 	@GET("/register")
 	StdResponse register();
 
-	@GET("/challenges")
-	ChallengesResponse challenges();
+	@GET("/challenges/{login}")
+	ChallengesResponse challenges(@Path("login") String login);
 
 	@PUT("/challenges/complete/{login}/{challenge_id}")
 	RewardResponse challenges_complete(@Path("login") String login, @Path("challenge_id") String id);

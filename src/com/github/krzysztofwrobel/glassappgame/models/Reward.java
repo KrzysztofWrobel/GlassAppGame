@@ -85,4 +85,15 @@ public class Reward implements Parcelable {
 		longitude = in.readInt();
 		image_link = in.readString();
 	}
+
+	@Override
+	public String toString() {
+		return "Reward{" +
+				"id='" + id + '\'' +
+				", description='" + description + '\'' +
+				", latitude=" + latitude +
+				", longitude=" + longitude +
+				", image_link='" + image_link + '\'' +
+				'}';
+	}
 }
