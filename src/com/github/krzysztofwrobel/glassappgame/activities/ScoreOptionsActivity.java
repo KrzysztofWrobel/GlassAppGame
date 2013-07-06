@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.github.krzysztofwrobel.glassappgame.R;
 import com.github.krzysztofwrobel.glassappgame.fragments.NavigateFragment;
+import com.github.krzysztofwrobel.glassappgame.fragments.OnFragmentClickedListener;
 import com.github.krzysztofwrobel.glassappgame.fragments.ShareFragment;
 import com.github.krzysztofwrobel.glassappgame.models.Reward;
 import com.squareup.picasso.Picasso;
@@ -22,7 +24,10 @@ import java.util.ArrayList;
 /**
  * Created by Krzysztof on 06.07.13.
  */
-public class ScoreOptionsActivity extends BaseActivity implements GestureDetector.OnGestureListener,GestureDetector.OnDoubleTapListener {
+public class ScoreOptionsActivity extends BaseActivity implements GestureDetector.OnGestureListener {
+
+    private static final int SHARE_FRAGMENT_POSITION = 0;
+    private static final int NAVIGATE_FRAGMENT_POSITION = 1;
     private ViewPager mSettingsViewPager;
     private OptionsPagerAdapter mOptionsPagerAdapter;
     private Reward receivedReward;
@@ -35,7 +40,7 @@ public class ScoreOptionsActivity extends BaseActivity implements GestureDetecto
         mSettingsViewPager = (ViewPager) mSettingsViewPager.findViewById(R.id.vp_recognize_settings);
         mOptionsPagerAdapter = new OptionsPagerAdapter(getSupportFragmentManager());
         receivedReward = getIntent().getParcelableExtra("reward");
-        if(receivedReward !=null){
+        if (receivedReward != null) {
             mOptionsPagerAdapter.addFragment(ShareFragment.getInstance(receivedReward));
             mOptionsPagerAdapter.addFragment(NavigateFragment.getInstance());
             mOptionsPagerAdapter.notifyDataSetChanged();
@@ -55,7 +60,14 @@ public class ScoreOptionsActivity extends BaseActivity implements GestureDetecto
 
     @Override
     public boolean onSingleTapUp(MotionEvent motionEvent) {
-        return false;
+        int currentPosition = mSettingsViewPager.getCurrentItem();
+        if (currentPosition == SHARE_FRAGMENT_POSITION) {
+            ((OnFragmentClickedListener)mOptionsPagerAdapter.getItem(SHARE_FRAGMENT_POSITION)).fragmentClicked();
+        } else if (currentPosition == NAVIGATE_FRAGMENT_POSITION){
+            takeDirection((double)receivedReward.getLatitude()/10e6,(double)receivedReward.getLongitude()/10e6);
+        }
+
+        return true;
     }
 
     @Override
@@ -69,29 +81,23 @@ public class ScoreOptionsActivity extends BaseActivity implements GestureDetecto
     }
 
     @Override
-    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
-        return false;
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float velocityX, float velocityY) {
+        int currentPosition = mSettingsViewPager.getCurrentItem();
+        int nextPosition = Math.min(mOptionsPagerAdapter.getCount(), currentPosition + 1);
+        int previousePosition = Math.max(0, currentPosition - 1);
+        if (velocityX < -3500) {
+            mSettingsViewPager.setCurrentItem(nextPosition);
+        } else if (velocityX > 3500) {
+            mSettingsViewPager.setCurrentItem(previousePosition);
+        }
+
+        return true;
     }
 
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTap(MotionEvent motionEvent) {
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
-        return false;
-    }
-
-    private class OptionsPagerAdapter extends FragmentStatePagerAdapter{
+    private class OptionsPagerAdapter extends FragmentStatePagerAdapter {
         protected ArrayList<Fragment> optionFragments = new ArrayList<Fragment>();
 
-        public void addFragment(Fragment fragment){
+        public void addFragment(Fragment fragment) {
             optionFragments.add(fragment);
         }
 
