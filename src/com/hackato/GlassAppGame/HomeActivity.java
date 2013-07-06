@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends FragmentActivity implements GestureDetector.OnGestureListener {
+public class HomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
 
     private ViewPager mSlideViewPager;
     private PagerAdapter mSlidePagerAdapter;
@@ -34,6 +34,8 @@ public class HomeActivity extends FragmentActivity implements GestureDetector.On
 
         mSlideViewPager = (ViewPager) findViewById(R.id.vp_home_slides);
         mSlidePagerAdapter = new ScreenSlidePagerAdapter(mSupportFragmentManager);
+        
+//        showInfoDialog(0, R.string.app_name);
 
     }
 
