@@ -22,10 +22,10 @@ public class HomeSlideFragment extends Fragment {
 
     private TextView slideTitleTextView;
     private ImageView backgroundImageView;
-    private Challenge chalange;
+    private Challenge challenge;
 
-    public HomeSlideFragment(Challenge chalange) {
-        this.chalange = chalange;
+    public HomeSlideFragment(Challenge challenge) {
+        this.challenge = challenge;
     }
 
     @Override
@@ -45,15 +45,15 @@ public class HomeSlideFragment extends Fragment {
     private void getChallangeView() {
         //TODO Alek użyj picasso żeby pobrać jakoś ten obrazek i ustawić
         backgroundImageView.setImageDrawable(null);
-        slideTitleTextView.setText(chalange.getTitle());
+        slideTitleTextView.setText(challenge.getTitle());
     }
 
     public Challenge getChallenge() {
-        return chalange;
+        return challenge;
     }
 
     public void setChallenge(Challenge chalange) {
-        this.chalange = chalange;
+        this.challenge = chalange;
         getChallangeView();
     }
 }

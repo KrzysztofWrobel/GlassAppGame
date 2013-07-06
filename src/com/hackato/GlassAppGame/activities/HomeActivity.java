@@ -1,32 +1,44 @@
 package com.hackato.GlassAppGame.activities;
 
-import java.util.ArrayList;
-
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.hackato.GlassAppGame.NetworkService;
 import com.hackato.GlassAppGame.R;
+import com.hackato.GlassAppGame.activities.BaseActivity;
 import com.hackato.GlassAppGame.fragments.HomeSlideFragment;
 import com.hackato.GlassAppGame.models.Challenge;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
 
-    private ViewPager mSlideViewPager;
+	private static final String TAG = "GlassAppGame";
+	private ViewPager mSlideViewPager;
     private ScreenSlidePagerAdapter mSlidePagerAdapter;
     private GestureDetector gestureDetector;
     private FragmentManager mSupportFragmentManager;
+	private LocalBroadcastManager mLocalBroadcastManager;
+	private BroadcastReceiver mLocalReceiver;
+	private ArrayList<Challenge> mChallenges;
 
-    @Override
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, true);
         setContentView(R.layout.home_activity);
@@ -35,17 +47,42 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
         gestureDetector = new GestureDetector(this, this);
 
+		mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+
+		mChallenges = new ArrayList<Challenge>();
+
         mSlideViewPager = (ViewPager) findViewById(R.id.vp_home_slides);
         mSlidePagerAdapter = new ScreenSlidePagerAdapter(mSupportFragmentManager);
         mSlideViewPager.setAdapter(mSlidePagerAdapter);
-        mSlideViewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
-        
-//        showInfoDialog(0, R.string.app_name);
+		mLocalReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if (NetworkService.ACTION_CHALLENGES.equals(intent.getAction())) {
+					boolean error = intent.getBooleanExtra("error", false);
+					if (error) {
+						showInfoDialog(0, getString(R.string.error_fetching_challenges));
+						return;
+					} else {
+
+                        mChallenges = intent.getParcelableArrayListExtra("challenges");
+                        for (int i = 0; i < mChallenges.size(); i++) {
+                            mSlidePagerAdapter.addSlideFragment(new HomeSlideFragment(mChallenges.get(i)));
+                        }
+                        mSlidePagerAdapter.notifyDataSetChanged();
+                    }
+
+                    dismissInfoDialog();
+                    Log.d(TAG, "onReceive=" + mChallenges);
+				}
+			}
+		};
+
+		if (savedInstanceState == null) {
+			NetworkService.run(this, NetworkService.ACTION_CHALLENGES, null);
+            showInfoDialog(0, R.string.challanges_loading);
+        }
+
 
     }
     
@@ -58,7 +95,22 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 //    	takeDirection(location.getLatitude(), location.getLongitude());
     }
 
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		IntentFilter intentFilter = new IntentFilter(NetworkService.ACTION_CHALLENGES);
+		mLocalBroadcastManager.registerReceiver(mLocalReceiver, intentFilter);
+	}
+
+	private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         private ArrayList<Fragment> mSlideFragments;
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
@@ -102,6 +154,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     public void onBackPressed() {
         Log.d("Gesture Example", "onBackPressed");
         Toast.makeText(getApplicationContext(), "Go Back", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 
     @Override

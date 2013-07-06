@@ -14,7 +14,20 @@ public class Challenge implements Parcelable {
 	private String image_link;
     private String title;
 
-    public String getId() {
+	@Override
+	public String toString() {
+		return "Challenge{" +
+				"id='" + id + '\'' +
+				", description='" + description + '\'' +
+				", points='" + points + '\'' +
+				", latitude=" + latitude +
+				", longitude=" + longitude +
+				", image_link='" + image_link + '\'' +
+				", title='" + title + '\'' +
+				'}';
+	}
+
+	public String getId() {
         return id;
     }
 
