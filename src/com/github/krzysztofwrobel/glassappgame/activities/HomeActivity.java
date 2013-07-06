@@ -25,7 +25,7 @@ import com.github.krzysztofwrobel.glassappgame.models.Challenge;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
+public class HomeActivity extends BaseActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     private static final String TAG = "glassappgame";
     private ViewPager mSlideViewPager;
@@ -44,6 +44,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         mSupportFragmentManager = getSupportFragmentManager();
 
         gestureDetector = new GestureDetector(this, this);
+        gestureDetector.setOnDoubleTapListener(this);
 
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
 
@@ -111,6 +112,23 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
         IntentFilter intentFilter = new IntentFilter(NetworkService.ACTION_CHALLENGES);
         mLocalBroadcastManager.registerReceiver(mLocalReceiver, intentFilter);
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent motionEvent) {
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+        Intent recognize = new Intent(this, RecognizeActivity.class);
+        startActivity(recognize);
+        return true;
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -187,11 +205,9 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         int nextPosition = Math.min(mSlidePagerAdapter.getCount(), currentPosition + 1);
         int previousePosition = Math.max(0, currentPosition - 1);
         if (velocityX < -3500) {
-            Toast.makeText(getApplicationContext(), "Fling Right", Toast.LENGTH_SHORT).show();
             mSlideViewPager.setCurrentItem(nextPosition);
         } else if (velocityX > 3500) {
             Log.d("Gesture Example", "OnFlingLeft");
-            Toast.makeText(getApplicationContext(), "Fling Left", Toast.LENGTH_SHORT).show();
             mSlideViewPager.setCurrentItem(previousePosition);
         }
         return true;
@@ -200,8 +216,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public void onLongPress(MotionEvent e) {
         Log.d("Gesture Example", "onLongPress");
-        Intent recognize = new Intent(this, RecognizeActivity.class);
-        startActivity(recognize);
+
     }
 
     @Override

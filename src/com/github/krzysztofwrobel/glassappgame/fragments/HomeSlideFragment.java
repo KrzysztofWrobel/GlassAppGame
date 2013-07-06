@@ -44,8 +44,6 @@ public class HomeSlideFragment extends Fragment {
     }
 
     private void getChallangeView() {
-        //TODO Alek użyj picasso żeby pobrać jakoś ten obrazek i ustawić
-        //backgroundImageView.setImageDrawable(null);
 		Picasso.with(getActivity()).load(challenge.getImage_link()).resize(640, 320).into(backgroundImageView);
         slideTitleTextView.setText(challenge.getTitle());
     }
