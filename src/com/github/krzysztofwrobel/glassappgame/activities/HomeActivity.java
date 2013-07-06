@@ -130,8 +130,19 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
-    	startDescriptionActivity();
+        Challenge selectedChallenge = mSlidePagerAdapter.getItem(mSlideViewPager.getCurrentItem()).getChallenge();
+    	if(selectedChallenge.isFinished()){
+            startRecognizeScoreActivity(selectedChallenge);
+        } else {
+            startDescriptionActivity(selectedChallenge);
+        }
         return true;
+    }
+
+    private void startRecognizeScoreActivity(Challenge selectedChallenge) {
+        Intent newIntent = new Intent(HomeActivity.this, RecognizeScoreActivity.class);
+        newIntent.putExtra("challenge", selectedChallenge);
+        startActivity(newIntent);
     }
 
     @Override
@@ -206,8 +217,8 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         return true;
     }
 
-    private void startDescriptionActivity() {
-        Challenge selectedChallenge = mSlidePagerAdapter.getItem(mSlideViewPager.getCurrentItem()).getChallenge();
+    private void startDescriptionActivity(Challenge selectedChallenge) {
+
         Intent newIntent = new Intent(HomeActivity.this, DescriptionActivity.class);
         newIntent.putExtra("challenge", selectedChallenge);
         startActivity(newIntent);

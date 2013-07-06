@@ -86,6 +86,7 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
                 }
             }
         };
+        Challenge completedChallange = getIntent().getParcelableExtra("challenge");
 		makePhoto();
 	}
 
