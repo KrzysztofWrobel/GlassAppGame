@@ -31,11 +31,13 @@ public class ScoreOptionsActivity extends BaseActivity implements GestureDetecto
     private ViewPager mSettingsViewPager;
     private OptionsPagerAdapter mOptionsPagerAdapter;
     private Reward receivedReward;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recognize_settings_layout);
+        gestureDetector = new GestureDetector(this,this);
 
         mSettingsViewPager = (ViewPager) findViewById(R.id.vp_recognize_settings);
         mOptionsPagerAdapter = new OptionsPagerAdapter(getSupportFragmentManager());
@@ -46,6 +48,25 @@ public class ScoreOptionsActivity extends BaseActivity implements GestureDetecto
             mOptionsPagerAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return true;
+    }
+
+    //We need this to ensure it works on normal android devices
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return true;
     }
 
     @Override

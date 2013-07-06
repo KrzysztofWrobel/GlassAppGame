@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GlassAppGame</string>
+    <string name="app_name">Poznaj Miasto</string>
     <string name="upload">Upload...</string>
     <string name="not_connected">No internet connection!</string>
     <string name="timeout">Connection timeout</string>
@@ -9,6 +9,7 @@
     <string name="navigate_to">Navigate to</string>
 	<string name="error_fetching_challenges">Failed on fetching challenges</string>
 	<string name="error_fetching_reward">Failed on fetching reward</string>
+	<string name="error_fetching_challenge">Failed on fetching challenge</string>
     <string name="points_for_challenge">You could get %1$d points by completing this challenge</string>
     <string name="challanges_loading">Downloading your challenges</string>
     <string name="share_text">Share</string>
