@@ -1,12 +1,11 @@
-package com.hackato.GlassAppGame.activities;
+package com.github.krzysztofwrobel.glassappgame.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.hackato.GlassAppGame.R;
-import com.hackato.GlassAppGame.activities.HomeActivity;
-import com.hackato.GlassAppGame.models.Challenge;
+import com.github.krzysztofwrobel.glassappgame.R;
+import com.github.krzysztofwrobel.glassappgame.models.Challenge;
 
 /**
  * Created by Krzysztof on 06.07.13.

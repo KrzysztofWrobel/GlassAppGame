@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame.activities;
+package com.github.krzysztofwrobel.glassappgame.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
 import android.widget.TextView;
 
-import com.hackato.GlassAppGame.R;
-import com.hackato.GlassAppGame.anim.CenterAnimation;
+import com.github.krzysztofwrobel.glassappgame.R;
+import com.github.krzysztofwrobel.glassappgame.anim.CenterAnimation;
 
 
 public abstract class BaseActivity extends FragmentActivity implements LocationListener

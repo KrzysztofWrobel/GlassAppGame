@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame.fragments;
+package com.github.krzysztofwrobel.glassappgame.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hackato.GlassAppGame.R;
-import com.hackato.GlassAppGame.models.Challenge;
+import com.github.krzysztofwrobel.glassappgame.R;
+import com.github.krzysztofwrobel.glassappgame.models.Challenge;
 import com.squareup.picasso.Picasso;
 
 /**

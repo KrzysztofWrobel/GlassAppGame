@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame.models;
+package com.github.krzysztofwrobel.glassappgame.models;
 
 import java.util.ArrayList;
 

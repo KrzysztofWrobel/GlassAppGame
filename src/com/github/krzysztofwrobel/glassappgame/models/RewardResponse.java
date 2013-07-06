@@ -1,4 +1,7 @@
-package com.hackato.GlassAppGame.models;
+package com.github.krzysztofwrobel.glassappgame.models;
+
+import com.github.krzysztofwrobel.glassappgame.models.Reward;
+import com.github.krzysztofwrobel.glassappgame.models.StdResponse;
 
 import java.util.ArrayList;
 

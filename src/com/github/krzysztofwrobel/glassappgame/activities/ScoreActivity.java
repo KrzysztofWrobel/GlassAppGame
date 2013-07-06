@@ -1,11 +1,11 @@
-package com.hackato.GlassAppGame.activities;
+package com.github.krzysztofwrobel.glassappgame.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hackato.GlassAppGame.R;
+import com.github.krzysztofwrobel.glassappgame.R;
 
 /**
  * Created by Krzysztof on 06.07.13.

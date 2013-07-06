@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame.activities;
+package com.github.krzysztofwrobel.glassappgame.activities;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.hackato.GlassAppGame.R;
+import com.github.krzysztofwrobel.glassappgame.R;
 
 public class RecognizeActivity extends BaseActivity
 {

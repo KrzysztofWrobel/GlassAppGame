@@ -1,8 +1,8 @@
-package com.hackato.GlassAppGame;
+package com.github.krzysztofwrobel.glassappgame;
 
-import com.hackato.GlassAppGame.models.ChallengesResponse;
-import com.hackato.GlassAppGame.models.RewardResponse;
-import com.hackato.GlassAppGame.models.StdResponse;
+import com.github.krzysztofwrobel.glassappgame.models.ChallengesResponse;
+import com.github.krzysztofwrobel.glassappgame.models.RewardResponse;
+import com.github.krzysztofwrobel.glassappgame.models.StdResponse;
 
 import retrofit.http.GET;
 import retrofit.http.PUT;

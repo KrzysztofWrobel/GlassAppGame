@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame.anim;
+package com.github.krzysztofwrobel.glassappgame.anim;
 
 import android.view.View;
 import android.view.animation.Animation;

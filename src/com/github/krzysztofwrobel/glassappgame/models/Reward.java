@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame.models;
+package com.github.krzysztofwrobel.glassappgame.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame.activities;
+package com.github.krzysztofwrobel.glassappgame.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
@@ -19,17 +18,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.hackato.GlassAppGame.NetworkService;
-import com.hackato.GlassAppGame.R;
-import com.hackato.GlassAppGame.activities.BaseActivity;
-import com.hackato.GlassAppGame.fragments.HomeSlideFragment;
-import com.hackato.GlassAppGame.models.Challenge;
+import com.github.krzysztofwrobel.glassappgame.NetworkService;
+import com.github.krzysztofwrobel.glassappgame.R;
+import com.github.krzysztofwrobel.glassappgame.fragments.HomeSlideFragment;
+import com.github.krzysztofwrobel.glassappgame.models.Challenge;
 
 import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
 
-    private static final String TAG = "GlassAppGame";
+    private static final String TAG = "glassappgame";
     private ViewPager mSlideViewPager;
     private ScreenSlidePagerAdapter mSlidePagerAdapter;
     private GestureDetector gestureDetector;

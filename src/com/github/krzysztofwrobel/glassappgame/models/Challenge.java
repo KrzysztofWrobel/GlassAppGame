@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame.models;
+package com.github.krzysztofwrobel.glassappgame.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -124,6 +124,7 @@ public class Challenge implements Parcelable {
 		dest.writeInt(latitude);
 		dest.writeInt(longitude);
 		dest.writeString(image_link);
+        dest.writeString(title);
 	}
 
 	public Challenge(Parcel in) {
@@ -133,5 +134,6 @@ public class Challenge implements Parcelable {
 		latitude = in.readInt();
 		longitude = in.readInt();
 		image_link = in.readString();
+        title = in.readString();
 	}
 }

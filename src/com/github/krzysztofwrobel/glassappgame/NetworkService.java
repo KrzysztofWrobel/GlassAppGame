@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame;
+package com.github.krzysztofwrobel.glassappgame;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.hackato.GlassAppGame.models.ChallengesResponse;
-import com.hackato.GlassAppGame.models.RewardResponse;
-import com.hackato.GlassAppGame.models.StdResponse;
+import com.github.krzysztofwrobel.glassappgame.models.ChallengesResponse;
+import com.github.krzysztofwrobel.glassappgame.models.RewardResponse;
+import com.github.krzysztofwrobel.glassappgame.models.StdResponse;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -77,7 +77,7 @@ public class NetworkService extends IntentService {
 				mLocalBroadcastManager.sendBroadcast(in);
 			} else if (ACTION_CHALLENTE_COMPLETE.equals(action)) {
 				String challenge_id = params.getString("id", "default-random-id");
-				String login = params.getString("login", "ranodom-login")
+				String login = params.getString("login", "ranodom-login");
 
 				RewardResponse rewardResponse = service.challenges_complete(login, challenge_id);
 
