@@ -1,5 +1,14 @@
 package com.github.krzysztofwrobel.glassappgame;
 
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+
+import retrofit.RestAdapter;
+import retrofit.client.ApacheClient;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +19,6 @@ import android.util.Log;
 import com.github.krzysztofwrobel.glassappgame.models.ChallengesResponse;
 import com.github.krzysztofwrobel.glassappgame.models.RewardResponse;
 import com.github.krzysztofwrobel.glassappgame.models.StdResponse;
-
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-
-import retrofit.RestAdapter;
-import retrofit.client.ApacheClient;
 
 /**
  * Created by alek on 7/6/13.
@@ -35,7 +36,24 @@ public class NetworkService extends IntentService {
 	private BackendAPI service;
 
 	// TODO get from settings
-	private final String userLogin = "player1";
+	private String userLogin;
+	
+	@Override
+	public void onStart(Intent intent, int startId)
+	{
+		super.onStart(intent, startId);
+		Account[] accounts = AccountManager.get(this).getAccounts();
+
+	    for (Account account : accounts) 
+	    {
+	        if(account.name.endsWith("gmail.com"))
+	        {
+	        	userLogin = account.name;
+	        }
+	    }
+	    if(userLogin == null)
+	    	userLogin = Long.toString(System.currentTimeMillis());
+	}
 
 	public NetworkService() {
 		super("NetworkService");
