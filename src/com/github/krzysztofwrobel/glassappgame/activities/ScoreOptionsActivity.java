@@ -41,6 +41,7 @@ public class ScoreOptionsActivity extends BaseActivity implements GestureDetecto
 
         mSettingsViewPager = (ViewPager) findViewById(R.id.vp_recognize_settings);
         mOptionsPagerAdapter = new OptionsPagerAdapter(getSupportFragmentManager());
+        mSettingsViewPager.setAdapter(mOptionsPagerAdapter);
         receivedReward = getIntent().getParcelableExtra("reward");
         if (receivedReward != null) {
             mOptionsPagerAdapter.addFragment(ShareFragment.getInstance(receivedReward));
