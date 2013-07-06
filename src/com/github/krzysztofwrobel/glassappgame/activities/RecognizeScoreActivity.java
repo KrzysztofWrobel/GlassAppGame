@@ -55,6 +55,8 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
     private ImageView rewardImageView;
 	
 	private String recognizedKey;
+    
+    private int failCounter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -75,7 +77,22 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
                 if (NetworkService.ACTION_CHALLENGE_COMPLETE.equals(intent.getAction())) {
                     boolean error = intent.getBooleanExtra("error", false);
                     if (error) {
-                        showInfoDialog(0, getString(R.string.error_fetching_challenges));
+                    	if(++failCounter < 3)
+                    	{
+                    		try
+							{
+								Thread.sleep(100);
+							} catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+                    		Bundle params = new Bundle();
+                    		params.putString("id", recognizedKey);
+                    		NetworkService.run(RecognizeScoreActivity.this, NetworkService.ACTION_CHALLENGE_COMPLETE, params);
+                    	} else
+                    	{
+                            showInfoDialog(0, getString(R.string.error_fetching_reward));
+                    	}
                         return;
                     } else {
 
@@ -96,7 +113,7 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
         	for(Challenge c : challenges)
         	{
         		if(c.getId().equals(recognizedKey))
-        			c.getId();//TODO change to finished
+        			c.setFinished(true);
         	}
             scoreTitleTextView.setText("You've got a Reward!");
             rewardDescriptionTextView.setText(receivedReward.getDescription());
@@ -312,6 +329,23 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
 		return false;
 	}
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return true;
+    }
 
+    //We need this to ensure it works on normal android devices
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return true;
+    }
 
 }

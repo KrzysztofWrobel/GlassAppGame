@@ -109,6 +109,7 @@ public class NetworkService extends IntentService {
 				mLocalBroadcastManager.sendBroadcast(in);
 			}
 		} catch (Exception exc) {
+			exc.printStackTrace();
 			Intent in = new Intent();
 			in.setAction(action);
 			in.putExtra("error", true);

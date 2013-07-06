@@ -42,12 +42,12 @@ public abstract class BaseActivity extends FragmentActivity implements LocationL
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		onCreate(savedInstanceState, false);
-		app = (GlassApplication) getApplication();
 	}
 	
 	protected void onCreate(Bundle savedInstanceState, boolean receiveLocationUpdates)
 	{
 		super.onCreate(savedInstanceState);
+		app = (GlassApplication) getApplication();
 		super.setContentView(R.layout.content_and_overlay);
 		mReceiveLocationUpdates = receiveLocationUpdates;
 		contentView = (ViewGroup) findViewById(R.id.content);
@@ -81,6 +81,7 @@ public abstract class BaseActivity extends FragmentActivity implements LocationL
 	@Override
 	public void setContentView(int layoutResID)
 	{
+		contentView.removeAllViews();
 		getLayoutInflater().inflate(layoutResID, contentView);
 	}
 

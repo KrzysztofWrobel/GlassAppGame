@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -41,24 +42,24 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, true);
-        setContentView(R.layout.home_activity);
 
-        mSupportFragmentManager = getSupportFragmentManager();
-
-        gestureDetector = new GestureDetector(this, this);
-        gestureDetector.setOnDoubleTapListener(this);
-
-        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
-
-        mSlideViewPager = (ViewPager) findViewById(R.id.vp_home_slides);
-        mSlidePagerAdapter = new ScreenSlidePagerAdapter(mSupportFragmentManager);
-        mSlideViewPager.setAdapter(mSlidePagerAdapter);
-        mSlideViewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return false;
-            }
-        });
+        if (savedInstanceState == null) {
+            setContentView(R.layout.splash);
+        	new Handler().postDelayed(new Runnable()
+			{
+				
+				@Override
+				public void run()
+				{
+		            start();
+		            NetworkService.run(HomeActivity.this, NetworkService.ACTION_CHALLENGES, null);
+		            showInfoDialog(0, R.string.challanges_loading);
+				}
+			}, 1500);
+        } else
+        {
+        	start();
+        }
 
         mLocalReceiver = new BroadcastReceiver() {
             @Override
@@ -97,13 +98,28 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
             }
         };
 
-        if (savedInstanceState == null) {
-            NetworkService.run(this, NetworkService.ACTION_CHALLENGES, null);
-            showInfoDialog(0, R.string.challanges_loading);
-        }
-
-
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
+
+	private void start()
+	{
+        setContentView(R.layout.home_activity);
+        
+		mSupportFragmentManager = getSupportFragmentManager();
+
+        gestureDetector = new GestureDetector(this, this);
+        gestureDetector.setOnDoubleTapListener(this);
+
+        mSlideViewPager = (ViewPager) findViewById(R.id.vp_home_slides);
+        mSlidePagerAdapter = new ScreenSlidePagerAdapter(mSupportFragmentManager);
+        mSlideViewPager.setAdapter(mSlidePagerAdapter);
+        mSlideViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return false;
+            }
+        });
+	}
 
     @Override
     public void onLocationChanged(Location location) {
@@ -124,7 +140,8 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     protected void onResume() {
         super.onResume();
 
-        mSlidePagerAdapter.notifyDataSetChanged();
+        if(mSlidePagerAdapter != null)
+        	mSlidePagerAdapter.notifyDataSetChanged();
 
         IntentFilter intentFilter = new IntentFilter(NetworkService.ACTION_CHALLENGES);
         mLocalBroadcastManager.registerReceiver(mLocalReceiver, intentFilter);
