@@ -10,7 +10,10 @@ import org.json.JSONObject;
 import pl.itraff.TestApi.ItraffApi.ItraffApi;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -18,10 +21,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.github.krzysztofwrobel.glassappgame.NetworkService;
 import com.github.krzysztofwrobel.glassappgame.R;
+import com.github.krzysztofwrobel.glassappgame.fragments.HomeSlideFragment;
+import com.github.krzysztofwrobel.glassappgame.models.Reward;
 
 public class RecognizeActivity extends BaseActivity
 {
@@ -32,6 +39,9 @@ public class RecognizeActivity extends BaseActivity
 	private final static Integer CLIENT_API_ID = 41933;
 
 	private TextView textView;
+	
+	private LocalBroadcastManager mLocalBroadcastManager;
+	private BroadcastReceiver mLocalReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -39,8 +49,40 @@ public class RecognizeActivity extends BaseActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recognize_layout);
 		textView = (TextView) findViewById(R.id.text);
+		mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+		mLocalReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (NetworkService.ACTION_CHALLENGE_COMPLETE.equals(intent.getAction())) {
+                    boolean error = intent.getBooleanExtra("error", false);
+                    if (error) {
+                        showInfoDialog(0, getString(R.string.error_fetching_challenges));
+                        return;
+                    } else {
+
+                        Reward reward = intent.getParcelableExtra("reward");
+                        showInfoDialog(0, reward.getDescription());
+                    }
+                }
+            }
+        };
 		makePhoto();
 	}
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        IntentFilter intentFilter = new IntentFilter(NetworkService.ACTION_CHALLENGE_COMPLETE);
+        mLocalBroadcastManager.registerReceiver(mLocalReceiver, intentFilter);
+    }
 
 	public void makePhoto()
 	{
@@ -178,7 +220,11 @@ public class RecognizeActivity extends BaseActivity
 	
 	private void onRecognized(String key)
 	{
-//		NetworkService.
+		Bundle params = new Bundle();
+		params.putString("id", key);
+		NetworkService.run(this, NetworkService.ACTION_CHALLENGE_COMPLETE, params);
 	}
+	
+	
 	
 }

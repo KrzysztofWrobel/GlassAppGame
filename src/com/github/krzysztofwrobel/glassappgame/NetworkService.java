@@ -25,7 +25,7 @@ import retrofit.client.ApacheClient;
 public class NetworkService extends IntentService {
 	public static final String ACTION_REGISTER = "ACTION_REGISTER";
 	public static final String ACTION_CHALLENGES = "ACTION_CHALLENGES";
-	public static final String ACTION_CHALLENTE_COMPLETE = "ACTION_CHALLENGE_COMPLETE";
+	public static final String ACTION_CHALLENGE_COMPLETE = "ACTION_CHALLENGE_COMPLETE";
 
 	private static final String TAG = "NetworkService";
 	private static final int SO_TIMEOUT = 4000;
@@ -75,7 +75,7 @@ public class NetworkService extends IntentService {
 				in.putExtra("challenges", challenges.getChallenges());
 				in.putExtra("error", challenges.isError());
 				mLocalBroadcastManager.sendBroadcast(in);
-			} else if (ACTION_CHALLENTE_COMPLETE.equals(action)) {
+			} else if (ACTION_CHALLENGE_COMPLETE.equals(action)) {
 				String challenge_id = params.getString("id", "default-random-id");
 				String login = params.getString("login", "ranodom-login");
 
