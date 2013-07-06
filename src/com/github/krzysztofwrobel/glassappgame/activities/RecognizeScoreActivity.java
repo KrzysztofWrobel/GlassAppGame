@@ -78,7 +78,7 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
 
                         Reward reward = intent.getParcelableExtra("reward");
                         onRewardReceived(reward);
-                        showInfoDialog(0, reward.getDescription());
+//                        showInfoDialog(0, reward.getDescription());
                     }
                 }
             }
