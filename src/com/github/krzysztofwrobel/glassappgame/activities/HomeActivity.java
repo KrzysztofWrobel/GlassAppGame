@@ -124,6 +124,8 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     protected void onResume() {
         super.onResume();
 
+        mSlidePagerAdapter.notifyDataSetChanged();
+
         IntentFilter intentFilter = new IntentFilter(NetworkService.ACTION_CHALLENGES);
         mLocalBroadcastManager.registerReceiver(mLocalReceiver, intentFilter);
     }
