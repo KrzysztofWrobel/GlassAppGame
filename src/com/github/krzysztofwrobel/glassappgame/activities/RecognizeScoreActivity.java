@@ -72,7 +72,7 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
                 if (NetworkService.ACTION_CHALLENGE_COMPLETE.equals(intent.getAction())) {
                     boolean error = intent.getBooleanExtra("error", false);
                     if (error) {
-                        showInfoDialog(0, getString(R.string.error_fetching_challenges));
+                        showInfoDialog(0, getString(R.string.error_fetching_challenge));
                         return;
                     } else {
 
