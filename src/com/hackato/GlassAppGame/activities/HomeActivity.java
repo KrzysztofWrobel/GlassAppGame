@@ -29,16 +29,16 @@ import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
 
-	private static final String TAG = "GlassAppGame";
-	private ViewPager mSlideViewPager;
+    private static final String TAG = "GlassAppGame";
+    private ViewPager mSlideViewPager;
     private ScreenSlidePagerAdapter mSlidePagerAdapter;
     private GestureDetector gestureDetector;
     private FragmentManager mSupportFragmentManager;
-	private LocalBroadcastManager mLocalBroadcastManager;
-	private BroadcastReceiver mLocalReceiver;
-	private ArrayList<Challenge> mChallenges;
+    private LocalBroadcastManager mLocalBroadcastManager;
+    private BroadcastReceiver mLocalReceiver;
+    private ArrayList<Challenge> mChallenges;
 
-	@Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, true);
         setContentView(R.layout.home_activity);
@@ -47,23 +47,29 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
         gestureDetector = new GestureDetector(this, this);
 
-		mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
 
-		mChallenges = new ArrayList<Challenge>();
+        mChallenges = new ArrayList<Challenge>();
 
         mSlideViewPager = (ViewPager) findViewById(R.id.vp_home_slides);
         mSlidePagerAdapter = new ScreenSlidePagerAdapter(mSupportFragmentManager);
         mSlideViewPager.setAdapter(mSlidePagerAdapter);
+        mSlideViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return false;
+            }
+        });
 
-		mLocalReceiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				if (NetworkService.ACTION_CHALLENGES.equals(intent.getAction())) {
-					boolean error = intent.getBooleanExtra("error", false);
-					if (error) {
-						showInfoDialog(0, getString(R.string.error_fetching_challenges));
-						return;
-					} else {
+        mLocalReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (NetworkService.ACTION_CHALLENGES.equals(intent.getAction())) {
+                    boolean error = intent.getBooleanExtra("error", false);
+                    if (error) {
+                        showInfoDialog(0, getString(R.string.error_fetching_challenges));
+                        return;
+                    } else {
 
                         mChallenges = intent.getParcelableArrayListExtra("challenges");
                         for (int i = 0; i < mChallenges.size(); i++) {
@@ -74,43 +80,42 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
                     dismissInfoDialog();
                     Log.d(TAG, "onReceive=" + mChallenges);
-				}
-			}
-		};
+                }
+            }
+        };
 
-		if (savedInstanceState == null) {
-			NetworkService.run(this, NetworkService.ACTION_CHALLENGES, null);
+        if (savedInstanceState == null) {
+            NetworkService.run(this, NetworkService.ACTION_CHALLENGES, null);
             showInfoDialog(0, R.string.challanges_loading);
         }
 
 
     }
-    
+
     @Override
-    public void onLocationChanged(Location location)
-    {
-    	// TODO start connection
-    	int lat = (int)(location.getLatitude() * 1E6);
-    	int lng = (int)(location.getLongitude() * 1E6);
+    public void onLocationChanged(Location location) {
+        // TODO start connection
+        int lat = (int) (location.getLatitude() * 1E6);
+        int lng = (int) (location.getLongitude() * 1E6);
 //    	takeDirection(location.getLatitude(), location.getLongitude());
     }
 
-	@Override
-	protected void onPause() {
-		super.onPause();
+    @Override
+    protected void onPause() {
+        super.onPause();
 
-		mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
-	}
+        mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
+    }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-		IntentFilter intentFilter = new IntentFilter(NetworkService.ACTION_CHALLENGES);
-		mLocalBroadcastManager.registerReceiver(mLocalReceiver, intentFilter);
-	}
+        IntentFilter intentFilter = new IntentFilter(NetworkService.ACTION_CHALLENGES);
+        mLocalBroadcastManager.registerReceiver(mLocalReceiver, intentFilter);
+    }
 
-	private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         private ArrayList<Fragment> mSlideFragments;
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
@@ -118,11 +123,11 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
             mSlideFragments = new ArrayList<Fragment>();
         }
 
-        public void addSlideFragment(Fragment fragment){
+        public void addSlideFragment(Fragment fragment) {
             mSlideFragments.add(fragment);
         }
 
-        public void removeSlideFragment(Fragment fragment){
+        public void removeSlideFragment(Fragment fragment) {
             mSlideFragments.remove(fragment);
         }
 
@@ -135,6 +140,12 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         public int getCount() {
             return mSlideFragments.size();
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return true;
     }
 
     //We need this to ensure it works on normal android devices
@@ -160,21 +171,30 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public boolean onDown(MotionEvent e) {
         Log.d("Gesture Example", "onDown");
-        Challenge selectedChallenge = mSlidePagerAdapter.getItem(mSlideViewPager.getCurrentItem()).getChallenge();
-        Intent newIntent = new Intent(HomeActivity.this,DescriptionActivity.class);
-        newIntent.putExtra("challenge",selectedChallenge);
-        startActivity(newIntent);
+//        startDescriptionActivity();
         return true;
+    }
+
+    private void startDescriptionActivity() {
+        Challenge selectedChallenge = mSlidePagerAdapter.getItem(mSlideViewPager.getCurrentItem()).getChallenge();
+        Intent newIntent = new Intent(HomeActivity.this, DescriptionActivity.class);
+        newIntent.putExtra("challenge", selectedChallenge);
+        startActivity(newIntent);
     }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         Log.d("Gesture Example", "onFling: velocityX:" + velocityX + "   velocityY:" + velocityY);
+        int currentPosition = mSlideViewPager.getCurrentItem();
+        int nextPosition = Math.min(mSlidePagerAdapter.getCount(), currentPosition + 1);
+        int previousePosition = Math.max(0, currentPosition - 1);
         if (velocityX < -3500) {
             Toast.makeText(getApplicationContext(), "Fling Right", Toast.LENGTH_SHORT).show();
+            mSlideViewPager.setCurrentItem(nextPosition);
         } else if (velocityX > 3500) {
             Log.d("Gesture Example", "OnFlingLeft");
             Toast.makeText(getApplicationContext(), "Fling Left", Toast.LENGTH_SHORT).show();
+            mSlideViewPager.setCurrentItem(previousePosition);
         }
         return true;
     }
@@ -189,11 +209,16 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         Log.d("Gesture Example", "onScroll: distanceX:" + distanceX + "   distanceY:" + distanceY);
+        int currentPosition = mSlideViewPager.getCurrentItem();
+        int nextPosition = Math.min(mSlidePagerAdapter.getCount(), currentPosition + 1);
+        int previousePosition = Math.max(0, currentPosition - 1);
         if (distanceX < -1) {
             //Scroll Right or Scroll Up Command Here
+//            mSlideViewPager.setCurrentItem(nextPosition);
         } else if (distanceX > 1) {
             Log.d("Gesture Example", "OnFlingLeft");
             //Scroll left or Scroll Down Command Here
+//            mSlideViewPager.setCurrentItem(previousePosition);
         }
         return true;
     }
@@ -206,7 +231,8 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         Log.d("Gesture Test", "onSingleTapUp");
-        Toast.makeText(getApplicationContext(), "Single Tap Up", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "Single Tap Up", Toast.LENGTH_SHORT).show();
+        startDescriptionActivity();
         return true;
     }
 
