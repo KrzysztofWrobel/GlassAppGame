@@ -8,6 +8,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.hackato.GlassAppGame.models.ChallengesResponse;
+import com.hackato.GlassAppGame.models.RewardResponse;
 import com.hackato.GlassAppGame.models.StdResponse;
 
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -24,6 +25,8 @@ import retrofit.client.ApacheClient;
 public class NetworkService extends IntentService {
 	public static final String ACTION_REGISTER = "ACTION_REGISTER";
 	public static final String ACTION_CHALLENGES = "ACTION_CHALLENGES";
+	public static final String ACTION_CHALLENTE_COMPLETE = "ACTION_CHALLENGE_COMPLETE";
+
 	private static final String TAG = "NetworkService";
 	private static final int SO_TIMEOUT = 4000;
 	private static final int CONNECT_TIMEOUT = 4000;
@@ -52,6 +55,9 @@ public class NetworkService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		String action = intent.getAction();
+		Bundle params = intent.getExtras();
+		if (params == null)
+			params = new Bundle();
 
 		try {
 			if (ACTION_REGISTER.equals(action)) {
@@ -68,6 +74,17 @@ public class NetworkService extends IntentService {
 				in.setAction(action);
 				in.putExtra("challenges", challenges.getChallenges());
 				in.putExtra("error", challenges.isError());
+				mLocalBroadcastManager.sendBroadcast(in);
+			} else if (ACTION_CHALLENTE_COMPLETE.equals(action)) {
+				String challenge_id = params.getString("id", "default-random-id");
+				String login = params.getString("login", "ranodom-login")
+
+				RewardResponse rewardResponse = service.challenges_complete(login, challenge_id);
+
+				Intent in = new Intent();
+				in.setAction(action);
+				in.putExtra("reward", rewardResponse.getReward());
+				in.putExtra("error", rewardResponse.isError());
 				mLocalBroadcastManager.sendBroadcast(in);
 			}
 		} catch (Exception exc) {
