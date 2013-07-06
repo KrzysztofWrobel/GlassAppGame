@@ -27,6 +27,6 @@
         <activity
             android:name=".activities.RecognizeActivity"
             android:screenOrientation="landscape" />
+        <activity android:screenOrientation="landscape" android:name=".activities.DescriptionActivity"/>
     </application>
-
-</manifest>
+</manifest> 

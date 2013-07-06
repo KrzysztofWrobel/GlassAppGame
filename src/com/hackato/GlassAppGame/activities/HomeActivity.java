@@ -11,17 +11,20 @@ import android.util.Log;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import com.hackato.GlassAppGame.R;
 import com.hackato.GlassAppGame.activities.BaseActivity;
+import com.hackato.GlassAppGame.fragments.HomeSlideFragment;
+import com.hackato.GlassAppGame.models.Challenge;
 
 import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
 
     private ViewPager mSlideViewPager;
-    private PagerAdapter mSlidePagerAdapter;
+    private ScreenSlidePagerAdapter mSlidePagerAdapter;
     private GestureDetector gestureDetector;
     private FragmentManager mSupportFragmentManager;
 
@@ -36,6 +39,13 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
         mSlideViewPager = (ViewPager) findViewById(R.id.vp_home_slides);
         mSlidePagerAdapter = new ScreenSlidePagerAdapter(mSupportFragmentManager);
+        mSlideViewPager.setAdapter(mSlidePagerAdapter);
+        mSlideViewPager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         
 //        showInfoDialog(0, R.string.app_name);
 
@@ -58,8 +68,8 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         }
 
         @Override
-        public Fragment getItem(int position) {
-            return mSlideFragments.get(position);
+        public HomeSlideFragment getItem(int position) {
+            return (HomeSlideFragment) mSlideFragments.get(position);
         }
 
         @Override
@@ -90,6 +100,10 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public boolean onDown(MotionEvent e) {
         Log.d("Gesture Example", "onDown");
+        Challenge selectedChallenge = mSlidePagerAdapter.getItem(mSlideViewPager.getCurrentItem()).getChallenge();
+        Intent newIntent = new Intent(HomeActivity.this,DescriptionActivity.class);
+        newIntent.putExtra("challenge",selectedChallenge);
+        startActivity(newIntent);
         return true;
     }
 
