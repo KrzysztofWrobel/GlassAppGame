@@ -7,8 +7,8 @@ import retrofit.http.GET;
  */
 public interface BackendAPI {
 	@GET("/register")
-	StdResponse register();
+    com.hackato.GlassAppGame.models.StdResponse register();
 
 	@GET("/challenges")
-	ChallengesResponse challenges();
+    com.hackato.GlassAppGame.models.ChallengesResponse challenges();
 }
