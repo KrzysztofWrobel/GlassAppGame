@@ -14,7 +14,7 @@ public class DescriptionActivity extends BaseActivity {
     private Challenge challenge;
     private TextView descriptionTitleTextView;
     private TextView descriptionFullTextView;
-    private TextView friendsAchivmentsTextView;
+    private TextView pointsTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,13 +22,14 @@ public class DescriptionActivity extends BaseActivity {
         setContentView(R.layout.description_activity);
         descriptionTitleTextView = (TextView) findViewById(R.id.tv_decription_title);
         descriptionFullTextView = (TextView) findViewById(R.id.tv_decription_full);
-        friendsAchivmentsTextView = (TextView) findViewById(R.id.tv_friend_achivments);
-
+        pointsTextView = (TextView) findViewById(R.id.tv_points);
+        
         Intent intent = getIntent();
         challenge = intent.getParcelableExtra("challenge");
         if(challenge != null){
             descriptionTitleTextView.setText(challenge.getTitle());
             descriptionFullTextView.setText(challenge.getDescription());
+            pointsTextView.setText(getString(R.string.points_for_challenge, challenge.getPoints()));
 
         }
     }

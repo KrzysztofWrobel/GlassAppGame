@@ -116,18 +116,19 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
-        return false;
+    	startDescriptionActivity();
+        return true;
     }
 
     @Override
     public boolean onDoubleTap(MotionEvent motionEvent) {
+        Intent recognize = new Intent(this, RecognizeActivity.class);
+        startActivity(recognize);
         return true;
     }
 
     @Override
     public boolean onDoubleTapEvent(MotionEvent motionEvent) {
-        Intent recognize = new Intent(this, RecognizeActivity.class);
-        startActivity(recognize);
         return true;
     }
 
@@ -187,7 +188,6 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public boolean onDown(MotionEvent e) {
         Log.d("Gesture Example", "onDown");
-//        startDescriptionActivity();
         return true;
     }
 
@@ -243,9 +243,6 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        Log.d("Gesture Test", "onSingleTapUp");
-//        Toast.makeText(getApplicationContext(), "Single Tap Up", Toast.LENGTH_SHORT).show();
-        startDescriptionActivity();
         return true;
     }
 

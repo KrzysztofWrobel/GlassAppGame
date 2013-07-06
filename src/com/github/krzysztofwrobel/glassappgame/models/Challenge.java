@@ -9,7 +9,7 @@ import android.os.Parcelable;
 public class Challenge implements Parcelable {
 	private String id;
 	private String description;
-	private String points;
+	private int points;
 	private int latitude, longitude;
 	private String image_link;
     private String title;
@@ -43,11 +43,11 @@ public class Challenge implements Parcelable {
         this.description = description;
     }
 
-    public String getPoints() {
+    public int getPoints() {
         return points;
     }
 
-    public void setPoints(String points) {
+    public void setPoints(int points) {
         this.points = points;
     }
 
@@ -120,7 +120,7 @@ public class Challenge implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(id);
 		dest.writeString(description);
-		dest.writeString(points);
+		dest.writeInt(points);
 		dest.writeInt(latitude);
 		dest.writeInt(longitude);
 		dest.writeString(image_link);
@@ -130,7 +130,7 @@ public class Challenge implements Parcelable {
 	public Challenge(Parcel in) {
 		id = in.readString();
 		description = in.readString();
-		points = in.readString();
+		points = in.readInt();
 		latitude = in.readInt();
 		longitude = in.readInt();
 		image_link = in.readString();
