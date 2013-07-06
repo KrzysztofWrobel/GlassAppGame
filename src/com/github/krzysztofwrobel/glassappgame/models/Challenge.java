@@ -14,6 +14,7 @@ public class Challenge implements Parcelable {
 	private String image_link;
     private String title;
     private boolean finished;
+    private Reward reward;
 
 	@Override
 	public String toString() {
@@ -92,6 +93,14 @@ public class Challenge implements Parcelable {
         this.finished = finished;
     }
 
+    public Reward getReward() {
+        return reward;
+    }
+
+    public void setReward(Reward reward) {
+        this.reward = reward;
+    }
+
     @Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -135,6 +144,7 @@ public class Challenge implements Parcelable {
 		dest.writeString(image_link);
         dest.writeString(title);
         dest.writeByte((byte) (finished ? 1 : 0));
+        dest.writeParcelable(reward,flags);
 	}
 
 	public Challenge(Parcel in) {
@@ -146,5 +156,6 @@ public class Challenge implements Parcelable {
 		image_link = in.readString();
         title = in.readString();
         finished = in.readByte() == 1;
+        reward = in.readParcelable(Reward.class.getClassLoader());
 	}
 }
