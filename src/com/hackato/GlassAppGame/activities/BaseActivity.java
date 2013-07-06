@@ -20,6 +20,8 @@ public abstract class BaseActivity extends FragmentActivity implements LocationL
 {
 	
 	private final static boolean DEBUG = true;
+	
+	private boolean mReceiveLocationUpdates;
 
 	private ViewGroup contentView;
 	private ViewGroup overlayView;	
@@ -37,6 +39,7 @@ public abstract class BaseActivity extends FragmentActivity implements LocationL
 	{
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.content_and_overlay);
+		mReceiveLocationUpdates = receiveLocationUpdates;
 		contentView = (ViewGroup) findViewById(R.id.content);
 		overlayView = (ViewGroup) findViewById(R.id.overlay);
 	    mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -46,16 +49,22 @@ public abstract class BaseActivity extends FragmentActivity implements LocationL
     protected void onResume()
     {
     	super.onResume();
-    	try {
-			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1.0f, this);
-		} catch(IllegalArgumentException ignored) {}
-		mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1.0f, this);
+    	if(mReceiveLocationUpdates)
+    	{
+        	try {
+    			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1.0f, this);
+    		} catch(IllegalArgumentException ignored) {}
+    		mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1.0f, this);
+    	}
     }
     
     @Override
     protected void onPause()
     {
-    	mLocationManager.removeUpdates(this);
+    	if(mReceiveLocationUpdates)
+    	{
+    		mLocationManager.removeUpdates(this);
+    	}
     	super.onPause();
     }
 	
