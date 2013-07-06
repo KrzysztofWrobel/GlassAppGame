@@ -37,20 +37,24 @@ public class NetworkService extends IntentService {
 
 	// TODO get from settings
 	private String userLogin;
-	
-	@Override
-	public void onStart(Intent intent, int startId)
-	{
-		super.onStart(intent, startId);
-		Account[] accounts = AccountManager.get(this).getAccounts();
 
-	    for (Account account : accounts) 
-	    {
-	        if(account.name.endsWith("gmail.com"))
-	        {
+	public void setUserLogin() {
+		AccountManager am = AccountManager.get(this);
+		if (am == null) {
+			Log.e(TAG, "am is null");
+			userLogin = "pelotasplus@gmail.com";
+			return;
+		}
+
+		Account[] accounts = am.getAccounts();
+
+	    for (Account account : accounts) 	    {
+	        if(account.name.endsWith("gmail.com")) {
 	        	userLogin = account.name;
+				break;
 	        }
 	    }
+
 	    if(userLogin == null)
 	    	userLogin = Long.toString(System.currentTimeMillis());
 	}
@@ -75,6 +79,8 @@ public class NetworkService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
+		setUserLogin();
+
 		String action = intent.getAction();
 		Bundle params = intent.getBundleExtra("params");
 		if (params == null)

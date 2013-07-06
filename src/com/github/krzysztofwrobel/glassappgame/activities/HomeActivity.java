@@ -149,7 +149,11 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
-        Challenge selectedChallenge = mSlidePagerAdapter.getItem(mSlideViewPager.getCurrentItem()).getChallenge();
+		if (mSlidePagerAdapter.getCount() == 0) {
+			return true;
+		}
+		int item = mSlideViewPager.getCurrentItem();
+        Challenge selectedChallenge = mSlidePagerAdapter.getItem(item).getChallenge();
     	if(selectedChallenge.isFinished()){
             startRecognizeScoreActivity(selectedChallenge);
         } else {

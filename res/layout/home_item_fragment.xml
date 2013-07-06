@@ -27,7 +27,6 @@
                android:visibility="gone"
                android:background="#000000"
                android:alpha="0.5"
-               android:src="@drawable/ok"/>
-
-
+               android:src="@drawable/ok"
+    />
 </RelativeLayout>
