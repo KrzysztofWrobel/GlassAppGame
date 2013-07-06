@@ -7,7 +7,10 @@
     <string name="try_again">Try again</string>
     <string name="itraff_error">iTraff error: %1$s</string>
     <string name="navigate_to">Navigate to</string>
-	<string name="error_fetching_challenges">Error fetching challenges</string>
-	<string name="points_for_challenge">You could get %1$d points by completing this challenge</string>
-    <string name="challanges_loading">Please wait... Downloading your challanges</string>
+	<string name="error_fetching_challenges">Failed on fetching challenges</string>
+    <string name="points_for_challenge">You could get %1$d points by completing this challenge</string>
+    <string name="challanges_loading">Downloading your challenges</string>
+    <string name="share_text">Share</string>
+    <string name="sharing_text">Sharing...</string>
+    <string name="shared_text">Shared</string>
 </resources>

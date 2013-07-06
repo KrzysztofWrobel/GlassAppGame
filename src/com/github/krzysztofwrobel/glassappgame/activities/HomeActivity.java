@@ -122,7 +122,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
     @Override
     public boolean onDoubleTap(MotionEvent motionEvent) {
-        Intent recognize = new Intent(this, RecognizeActivity.class);
+        Intent recognize = new Intent(this, RecognizeScoreActivity.class);
         startActivity(recognize);
         return true;
     }
@@ -188,6 +188,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public boolean onDown(MotionEvent e) {
         Log.d("Gesture Example", "onDown");
+//        startDescriptionActivity();
         return true;
     }
 
@@ -204,9 +205,9 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         int currentPosition = mSlideViewPager.getCurrentItem();
         int nextPosition = Math.min(mSlidePagerAdapter.getCount(), currentPosition + 1);
         int previousePosition = Math.max(0, currentPosition - 1);
-        if (velocityX < -3500) {
+        if (velocityX < -2500) {
             mSlideViewPager.setCurrentItem(nextPosition);
-        } else if (velocityX > 3500) {
+        } else if (velocityX > 2500) {
             Log.d("Gesture Example", "OnFlingLeft");
             mSlideViewPager.setCurrentItem(previousePosition);
         }
