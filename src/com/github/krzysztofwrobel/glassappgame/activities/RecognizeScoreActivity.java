@@ -25,6 +25,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,13 +34,15 @@ import com.github.krzysztofwrobel.glassappgame.R;
 import com.github.krzysztofwrobel.glassappgame.models.Reward;
 import com.squareup.picasso.Picasso;
 
-public class RecognizeScoreActivity extends BaseActivity
+public class RecognizeScoreActivity extends BaseActivity implements GestureDetector.OnGestureListener
 {
 	private final static String TAG = "RecognizeScoreActivity";
 	private static final int RESULT_BMP_DAMAGED = 128;
 
 	private final static String CLIENT_API_KEY = "4166e20337";
 	private final static Integer CLIENT_API_ID = 41933;
+	
+	private GestureDetector gestureDetector;
 
 	private TextView textView;
 	
@@ -54,6 +57,8 @@ public class RecognizeScoreActivity extends BaseActivity
 	{
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.recognize_score_activity);
+
+        gestureDetector = new GestureDetector(this, this);
 
         scoreTitleTextView = (TextView) findViewById(R.id.tv_score_title);
         rewardDescriptionTextView = (TextView) findViewById(R.id.tv_reward_description);
@@ -255,6 +260,44 @@ public class RecognizeScoreActivity extends BaseActivity
 		Bundle params = new Bundle();
 		params.putString("id", key);
 		NetworkService.run(this, NetworkService.ACTION_CHALLENGE_COMPLETE, params);
+	}
+
+	@Override
+	public boolean onDown(MotionEvent e)
+	{
+		return false;
+	}
+
+	@Override
+	public void onShowPress(MotionEvent e)
+	{
+		
+	}
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent e)
+	{
+		Intent scoreOptions = new Intent(this, ScoreOptionsActivity.class);
+		startActivity(scoreOptions);
+		return true;
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
+	{
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent e)
+	{
+		
+	}
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+	{
+		return false;
 	}
 
 
