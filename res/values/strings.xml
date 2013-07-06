@@ -3,6 +3,8 @@
     <string name="app_name">GlassAppGame</string>
     <string name="upload">Upload...</string>
     <string name="not_connected">No internet connection!</string>
+    <string name="timeout">Connection timeout</string>
+    <string name="itraff_error">iTraff error: %1$s</string>
 	<string name="error_fetching_challenges">Błąd z pobieraniem zadań</string>
     <string name="challanges_loading">Poczekaj... Pobieramy dla Ciebie challange</string>
 </resources>
