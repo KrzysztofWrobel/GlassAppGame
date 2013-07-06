@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.github.krzysztofwrobel.glassappgame.NetworkService;
 import com.github.krzysztofwrobel.glassappgame.R;
+import com.github.krzysztofwrobel.glassappgame.models.Challenge;
 import com.github.krzysztofwrobel.glassappgame.models.Reward;
 import com.squareup.picasso.Picasso;
 
@@ -82,6 +83,7 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
                 }
             }
         };
+        Challenge completedChallange = getIntent().getParcelableExtra("challenge");
 		makePhoto();
 	}
 

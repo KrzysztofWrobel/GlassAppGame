@@ -13,6 +13,7 @@ public class Challenge implements Parcelable {
 	private int latitude, longitude;
 	private String image_link;
     private String title;
+    private boolean finished;
 
 	@Override
 	public String toString() {
@@ -83,6 +84,14 @@ public class Challenge implements Parcelable {
         this.title = title;
     }
 
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
     @Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -125,6 +134,7 @@ public class Challenge implements Parcelable {
 		dest.writeInt(longitude);
 		dest.writeString(image_link);
         dest.writeString(title);
+        dest.writeByte((byte) (finished ? 1 : 0));
 	}
 
 	public Challenge(Parcel in) {
@@ -135,5 +145,6 @@ public class Challenge implements Parcelable {
 		longitude = in.readInt();
 		image_link = in.readString();
         title = in.readString();
+        finished = in.readByte() == 1;
 	}
 }

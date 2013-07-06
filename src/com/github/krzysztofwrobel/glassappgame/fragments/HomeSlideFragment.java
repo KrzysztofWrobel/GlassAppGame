@@ -50,6 +50,10 @@ public class HomeSlideFragment extends Fragment {
         backgroundImageView = (ImageView) rootView.findViewById(R.id.iv_slide_image);
         slideTitleTextView = (TextView) rootView.findViewById(R.id.tv_slide_title);
         getChallangeView();
+        if(challenge.isFinished()){
+            rootView.findViewById(R.id.iv_completed_mask).setVisibility(View.VISIBLE);
+        }
+
 
 
         return rootView;
