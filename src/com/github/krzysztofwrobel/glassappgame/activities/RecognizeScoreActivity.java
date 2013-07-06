@@ -96,9 +96,8 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
                     	}
                         return;
                     } else {
-
-                        Reward reward = intent.getParcelableExtra("reward");
-                        onRewardReceived(reward);
+                        completedChallangeReward = intent.getParcelableExtra("reward");
+                        onRewardReceived(completedChallangeReward);
 //                        showInfoDialog(0, reward.getDescription());
                     }
                 }
@@ -106,7 +105,7 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
         };
         Challenge completedChallange = getIntent().getParcelableExtra("challenge");
         if(completedChallange!=null && completedChallange.getReward()!=null){
-            completedChallangeReward = completedChallange.getReward();
+
             onRewardReceived(completedChallangeReward);
         } else {
 		    makePhoto();
