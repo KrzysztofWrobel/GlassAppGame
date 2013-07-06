@@ -55,6 +55,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     	// TODO start connection
     	int lat = (int)(location.getLatitude() * 1E6);
     	int lng = (int)(location.getLongitude() * 1E6);
+//    	takeDirection(location.getLatitude(), location.getLongitude());
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

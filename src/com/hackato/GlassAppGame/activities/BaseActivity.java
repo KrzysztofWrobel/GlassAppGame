@@ -1,9 +1,11 @@
 package com.hackato.GlassAppGame.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -140,6 +142,13 @@ public abstract class BaseActivity extends FragmentActivity implements LocationL
 	{
 		// TODO Auto-generated method stub
 		
+	}
+	
+	protected void takeDirection(double lat, double lng)
+	{
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" +lat+","+lng));
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
 	}
 
 }
