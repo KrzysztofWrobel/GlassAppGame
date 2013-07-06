@@ -25,7 +25,7 @@ public class ScoreActivity extends BaseActivity {
         rewardImageView = (ImageView) findViewById(R.id.iv_reward_icon);
 
         Intent intent = getIntent();
-        //TODO obiekt reward ustawić wartości na polach ekranu; 
+        //TODO obiekt reward ustawić wartości na polach ekranu;
 
     }
 }

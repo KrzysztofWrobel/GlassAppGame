@@ -4,4 +4,5 @@
     <string name="upload">Upload...</string>
     <string name="not_connected">No internet connection!</string>
 	<string name="error_fetching_challenges">Błąd z pobieraniem zadań</string>
+    <string name="challanges_loading">Poczekaj... Pobieramy dla Ciebie challange</string>
 </resources>

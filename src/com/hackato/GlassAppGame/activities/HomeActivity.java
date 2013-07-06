@@ -54,12 +54,6 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         mSlideViewPager = (ViewPager) findViewById(R.id.vp_home_slides);
         mSlidePagerAdapter = new ScreenSlidePagerAdapter(mSupportFragmentManager);
         mSlideViewPager.setAdapter(mSlidePagerAdapter);
-        mSlideViewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
 		mLocalReceiver = new BroadcastReceiver() {
 			@Override
@@ -69,19 +63,26 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 					if (error) {
 						showInfoDialog(0, getString(R.string.error_fetching_challenges));
 						return;
-					}
+					} else {
 
-					mChallenges = intent.getParcelableArrayListExtra("challenges");
-					Log.d(TAG, "onReceive=" + mChallenges);
+                        mChallenges = intent.getParcelableArrayListExtra("challenges");
+                        for (int i = 0; i < mChallenges.size(); i++) {
+                            mSlidePagerAdapter.addSlideFragment(new HomeSlideFragment(mChallenges.get(i)));
+                        }
+                        mSlidePagerAdapter.notifyDataSetChanged();
+                    }
+
+                    dismissInfoDialog();
+                    Log.d(TAG, "onReceive=" + mChallenges);
 				}
 			}
 		};
 
 		if (savedInstanceState == null) {
 			NetworkService.run(this, NetworkService.ACTION_CHALLENGES, null);
-		}
-        
-//        showInfoDialog(0, R.string.app_name);
+            showInfoDialog(0, R.string.challanges_loading);
+        }
+
 
     }
     
