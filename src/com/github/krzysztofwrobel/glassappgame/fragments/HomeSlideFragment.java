@@ -24,9 +24,21 @@ public class HomeSlideFragment extends Fragment {
     private TextView slideTitleTextView;
     private ImageView backgroundImageView;
     private Challenge challenge;
-
-    public HomeSlideFragment(Challenge challenge) {
-        this.challenge = challenge;
+    
+    public static HomeSlideFragment getInstance(Challenge challenge)
+    {
+    	HomeSlideFragment fragment = new HomeSlideFragment();
+    	Bundle args = new Bundle();
+    	args.putParcelable("challenge", challenge);
+    	fragment.setArguments(args);
+    	return fragment;
+    }
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+    	super.onCreate(savedInstanceState);
+    	this.challenge = getArguments().getParcelable("challenge");
     }
 
     @Override

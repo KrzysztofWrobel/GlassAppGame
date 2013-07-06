@@ -72,7 +72,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
                         mChallenges = intent.getParcelableArrayListExtra("challenges");
                         for (int i = 0; i < mChallenges.size(); i++) {
-                            mSlidePagerAdapter.addSlideFragment(new HomeSlideFragment(mChallenges.get(i)));
+                            mSlidePagerAdapter.addSlideFragment(HomeSlideFragment.getInstance(mChallenges.get(i)));
                         }
                         mSlidePagerAdapter.notifyDataSetChanged();
                     }
