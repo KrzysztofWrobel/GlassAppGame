@@ -105,6 +105,17 @@ public class Challenge implements Parcelable {
 		return 0;
 	}
 
+    public static final Parcelable.Creator<Challenge> CREATOR
+            = new Parcelable.Creator<Challenge>() {
+        public Challenge createFromParcel(Parcel in) {
+            return new Challenge(in);
+        }
+
+        public Challenge[] newArray(int size) {
+            return new Challenge[size];
+        }
+    };
+
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(id);
