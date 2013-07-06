@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
@@ -39,7 +40,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState, true);
         setContentView(R.layout.home_activity);
 
         mSupportFragmentManager = getSupportFragmentManager();
@@ -82,6 +83,15 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         
 //        showInfoDialog(0, R.string.app_name);
 
+    }
+    
+    @Override
+    public void onLocationChanged(Location location)
+    {
+    	// TODO start connection
+    	int lat = (int)(location.getLatitude() * 1E6);
+    	int lng = (int)(location.getLongitude() * 1E6);
+//    	takeDirection(location.getLatitude(), location.getLongitude());
     }
 
 	@Override
@@ -143,6 +153,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     public void onBackPressed() {
         Log.d("Gesture Example", "onBackPressed");
         Toast.makeText(getApplicationContext(), "Go Back", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 
     @Override
