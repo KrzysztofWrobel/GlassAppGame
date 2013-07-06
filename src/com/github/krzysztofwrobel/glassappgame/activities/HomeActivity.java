@@ -35,6 +35,8 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     private LocalBroadcastManager mLocalBroadcastManager;
     private BroadcastReceiver mLocalReceiver;
     private ArrayList<Challenge> mChallenges;
+    
+    private int failCounter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,20 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
                 if (NetworkService.ACTION_CHALLENGES.equals(intent.getAction())) {
                     boolean error = intent.getBooleanExtra("error", false);
                     if (error) {
-                        showInfoDialog(0, getString(R.string.error_fetching_challenges));
+                    	if(++failCounter < 3)
+                    	{
+                    		try
+							{
+								Thread.sleep(100);
+							} catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+                    		NetworkService.run(HomeActivity.this, NetworkService.ACTION_CHALLENGES, null);
+                    	} else
+                    	{
+                            showInfoDialog(0, getString(R.string.error_fetching_challenges));
+                    	}
                         return;
                     } else {
 
