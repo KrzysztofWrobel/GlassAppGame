@@ -22,18 +22,27 @@
             android:theme="@android:style/Theme.Holo.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.RecognizeActivity"
-            android:screenOrientation="sensorLandscape" />
-        <activity android:screenOrientation="sensorLandscape" android:name=".activities.DescriptionActivity"/>
-        <activity android:screenOrientation="sensorLandscape" android:name=".activities.ScoreActivity"/>
+            android:screenOrientation="sensorLandscape"
+			android:theme="@android:style/Theme.Holo.NoActionBar"
+		/>
+        <activity
+			android:screenOrientation="sensorLandscape"
+			android:name=".activities.DescriptionActivity"
+			android:theme="@android:style/Theme.Holo.NoActionBar"
+		/>
+        <activity
+			android:screenOrientation="sensorLandscape"
+			android:name=".activities.ScoreActivity"
+			android:theme="@android:style/Theme.Holo.NoActionBar"
+		/>
 		<service
-				android:name=".NetworkService"
-				android:exported="false"
+			android:name=".NetworkService"
+			android:exported="false"
 		/>
     </application>
 </manifest> 
