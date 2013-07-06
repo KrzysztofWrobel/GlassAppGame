@@ -101,6 +101,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     public void onBackPressed() {
         Log.d("Gesture Example", "onBackPressed");
         Toast.makeText(getApplicationContext(), "Go Back", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 
     @Override

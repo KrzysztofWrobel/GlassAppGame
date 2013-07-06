@@ -11,7 +11,7 @@ import com.hackato.GlassAppGame.models.Challenge;
 /**
  * Created by Krzysztof on 06.07.13.
  */
-public class DescriptionActivity extends HomeActivity {
+public class DescriptionActivity extends BaseActivity {
     private Challenge challenge;
     private TextView descriptionTitleTextView;
     private TextView descriptionFullTextView;
