@@ -1,5 +1,8 @@
 package com.hackato.GlassAppGame;
 
+import com.hackato.GlassAppGame.models.ChallengesResponse;
+import com.hackato.GlassAppGame.models.StdResponse;
+
 import retrofit.http.GET;
 
 /**
@@ -7,8 +10,8 @@ import retrofit.http.GET;
  */
 public interface BackendAPI {
 	@GET("/register")
-    com.hackato.GlassAppGame.models.StdResponse register();
+	StdResponse register();
 
 	@GET("/challenges")
-    com.hackato.GlassAppGame.models.ChallengesResponse challenges();
+	ChallengesResponse challenges();
 }
