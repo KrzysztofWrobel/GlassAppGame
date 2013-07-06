@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame;
+package com.hackato.GlassAppGame.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
 import android.widget.TextView;
 
-import com.hackato.GlassAppGame.anim.CenterAnimation;
+import com.hackato.GlassAppGame.R;
+import com.hackato.GlassAppGame.anim.*;
 
 
 public class BaseActivity extends FragmentActivity

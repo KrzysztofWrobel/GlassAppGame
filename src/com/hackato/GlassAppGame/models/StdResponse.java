@@ -1,4 +1,4 @@
-package com.hackato.GlassAppGame;
+package com.hackato.GlassAppGame.models;
 
 /**
  * Created by alek on 7/6/13.

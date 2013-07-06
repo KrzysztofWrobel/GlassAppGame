@@ -1,10 +1,8 @@
-package com.hackato.GlassAppGame;
+package com.hackato.GlassAppGame.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,6 +11,9 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.Toast;
+
+import com.hackato.GlassAppGame.R;
+import com.hackato.GlassAppGame.activities.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -52,7 +53,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
         }
 
         public void removeSlideFragment(Fragment fragment){
-
+            mSlideFragments.remove(fragment);
         }
 
         @Override

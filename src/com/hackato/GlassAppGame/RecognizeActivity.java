@@ -22,6 +22,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hackato.GlassAppGame.activities.BaseActivity;
+
 public class RecognizeActivity extends BaseActivity
 {
 	private final static String TAG = "RecognizeActivity";
@@ -38,6 +40,7 @@ public class RecognizeActivity extends BaseActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recognize_layout);
 		textView = (TextView) findViewById(R.id.text);
+		makePhoto();
 	}
 
 	public void makePhoto()

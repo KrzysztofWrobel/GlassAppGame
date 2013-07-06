@@ -6,7 +6,7 @@
     <uses-sdk android:minSdkVersion="15"
             android:targetSdkVersion="15"/>
     <application android:label="@string/app_name">
-        <activity android:name=".HomeActivity"
+        <activity android:name=".activities.HomeActivity"
                   android:label="@string/app_name"
 				  android:theme="@android:style/Theme.Holo.NoActionBar"
                   android:screenOrientation="landscape">
@@ -15,5 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activities.RecognizeActivity"
+                  android:screenOrientation="landscape"/>
     </application>
 </manifest> 
