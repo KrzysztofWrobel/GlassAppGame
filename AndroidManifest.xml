@@ -3,7 +3,7 @@
           package="com.hackato.GlassAppGame"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="10"
+    <uses-sdk android:minSdkVersion="15"
             android:targetSdkVersion="15"/>
     <application android:label="@string/app_name">
         <activity android:name=".HomeActivity"

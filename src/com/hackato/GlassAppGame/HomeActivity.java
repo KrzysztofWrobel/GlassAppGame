@@ -2,21 +2,66 @@ package com.hackato.GlassAppGame;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class HomeActivity extends Activity implements GestureDetector.OnGestureListener {
+import java.util.ArrayList;
 
+public class HomeActivity extends FragmentActivity implements GestureDetector.OnGestureListener {
+
+    private ViewPager mSlideViewPager;
+    private PagerAdapter mSlidePagerAdapter;
     private GestureDetector gestureDetector;
+    private FragmentManager mSupportFragmentManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
+
+        mSupportFragmentManager = getSupportFragmentManager();
+
         gestureDetector = new GestureDetector(this, this);
 
+        mSlideViewPager = (ViewPager) findViewById(R.id.vp_home_slides);
+        mSlidePagerAdapter = new ScreenSlidePagerAdapter(mSupportFragmentManager);
+
+    }
+
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        private ArrayList<Fragment> mSlideFragments;
+
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+            mSlideFragments = new ArrayList<Fragment>();
+        }
+
+        public void addSlideFragment(Fragment fragment){
+            mSlideFragments.add(fragment);
+        }
+
+        public void removeSlideFragment(Fragment fragment){
+
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mSlideFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mSlideFragments.size();
+        }
     }
 
     //We need this to ensure it works on normal android devices
