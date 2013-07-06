@@ -6,6 +6,7 @@ import com.github.krzysztofwrobel.glassappgame.models.StdResponse;
 
 import retrofit.http.GET;
 import retrofit.http.PUT;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -19,5 +20,5 @@ public interface BackendAPI {
 	ChallengesResponse challenges();
 
 	@PUT("/challenges/complete/{login}/{challenge_id}")
-	RewardResponse challenges_complete(@Query("login") String login, @Query("challenge_id") String id);
+	RewardResponse challenges_complete(@Path("login") String login, @Path("challenge_id") String id);
 }
