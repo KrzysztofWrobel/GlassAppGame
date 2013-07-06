@@ -122,7 +122,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
 
     @Override
     public boolean onDoubleTap(MotionEvent motionEvent) {
-        Intent recognize = new Intent(this, RecognizeActivity.class);
+        Intent recognize = new Intent(this, RecognizeScoreActivity.class);
         startActivity(recognize);
         return true;
     }
@@ -188,6 +188,7 @@ public class HomeActivity extends BaseActivity implements GestureDetector.OnGest
     @Override
     public boolean onDown(MotionEvent e) {
         Log.d("Gesture Example", "onDown");
+//        startDescriptionActivity();
         return true;
     }
 

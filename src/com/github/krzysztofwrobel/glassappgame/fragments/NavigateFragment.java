@@ -19,8 +19,8 @@ public class NavigateFragment extends Fragment
     }
     
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	View v = inflater.inflate(R.layout.simple_text_layout, container, false);
-    	((TextView)v.findViewById(R.id.text)).setText(R.string.navigate_to);
+    	View v = inflater.inflate(R.layout.navigate_layout, container, false);
+    	((TextView)v.findViewById(R.id.tv_navigate)).setText(R.string.navigate_to);
     	return v;
     }
 }

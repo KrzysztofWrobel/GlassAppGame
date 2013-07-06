@@ -24,16 +24,18 @@ import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.krzysztofwrobel.glassappgame.NetworkService;
 import com.github.krzysztofwrobel.glassappgame.R;
-import com.github.krzysztofwrobel.glassappgame.fragments.HomeSlideFragment;
 import com.github.krzysztofwrobel.glassappgame.models.Reward;
+import com.squareup.picasso.Picasso;
 
-public class RecognizeActivity extends BaseActivity
+public class RecognizeScoreActivity extends BaseActivity
 {
-	private final static String TAG = "RecognizeActivity";
+	private final static String TAG = "RecognizeScoreActivity";
 	private static final int RESULT_BMP_DAMAGED = 128;
 
 	private final static String CLIENT_API_KEY = "4166e20337";
@@ -43,14 +45,21 @@ public class RecognizeActivity extends BaseActivity
 	
 	private LocalBroadcastManager mLocalBroadcastManager;
 	private BroadcastReceiver mLocalReceiver;
+    private TextView scoreTitleTextView;
+    private TextView rewardDescriptionTextView;
+    private ImageView rewardImageView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.recognize_layout);
-		textView = (TextView) findViewById(R.id.text);
-		mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+        setContentView(R.layout.recognize_score_activity);
+
+        scoreTitleTextView = (TextView) findViewById(R.id.tv_score_title);
+        rewardDescriptionTextView = (TextView) findViewById(R.id.tv_reward_description);
+        rewardImageView = (ImageView) findViewById(R.id.iv_reward_icon);
+
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
 		mLocalReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -71,11 +80,13 @@ public class RecognizeActivity extends BaseActivity
 		makePhoto();
 	}
 
-    private void onRewardReceived(Reward reward) {
-        Intent newIntent = new Intent(this,ScoreActivity.class);
-        newIntent.putExtra("reward",reward);
-        startActivity(newIntent);
-        (this).finish();
+    private void onRewardReceived(Reward receivedReward) {
+        if(receivedReward!=null){
+            scoreTitleTextView.setText("You've got a Reward!");
+            rewardDescriptionTextView.setText(receivedReward.getDescription());
+            Picasso.with(this).load(receivedReward.getImage_link()).resize(640, 320).into(rewardImageView);
+        }
+
     }
 
     @Override
@@ -245,7 +256,7 @@ public class RecognizeActivity extends BaseActivity
 		params.putString("id", key);
 		NetworkService.run(this, NetworkService.ACTION_CHALLENGE_COMPLETE, params);
 	}
-	
-	
-	
+
+
+
 }

@@ -3,7 +3,9 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/tv_navigate"
+        android:gravity="center"
+        android:textSize="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

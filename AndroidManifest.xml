@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RecognizeActivity"
+            android:name=".activities.RecognizeScoreActivity"
             android:screenOrientation="sensorLandscape"
 			android:theme="@android:style/Theme.Holo.NoActionBar"
 		/>
@@ -37,7 +37,7 @@
 		/>
         <activity
 			android:screenOrientation="sensorLandscape"
-			android:name=".activities.ScoreActivity"
+			android:name=".activities.ScoreOptionsActivity"
 			android:theme="@android:style/Theme.Holo.NoActionBar"
 		/>
 		<service
