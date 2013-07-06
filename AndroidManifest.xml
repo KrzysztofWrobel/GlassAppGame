@@ -43,6 +43,11 @@
 			android:name=".activities.ScoreOptionsActivity"
 			android:theme="@android:style/Theme.Holo.NoActionBar"
 		/>
+        <activity
+			android:screenOrientation="sensorLandscape"
+			android:name=".activities.CameraActivity"
+			android:theme="@android:style/Theme.Holo.NoActionBar"
+		/>
 		<service
 			android:name=".NetworkService"
 			android:exported="false"

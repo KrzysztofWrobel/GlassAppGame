@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -145,10 +146,10 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
 	public void makePhoto()
 	{
 		// Intent to take a photo
-		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		takePictureIntent.putExtra(MediaStore.EXTRA_FULL_SCREEN, true);
-		takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, true);
-		takePictureIntent.putExtra(MediaStore.EXTRA_SHOW_ACTION_ICONS, false);
+		Intent takePictureIntent = new Intent(this, CameraActivity.class);
+//		takePictureIntent.putExtra(MediaStore.EXTRA_FULL_SCREEN, true);
+//		takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, true);
+//		takePictureIntent.putExtra(MediaStore.EXTRA_SHOW_ACTION_ICONS, false);
 		startActivityForResult(takePictureIntent, 1234);
 	}
 
@@ -247,7 +248,8 @@ public class RecognizeScoreActivity extends BaseActivity implements GestureDetec
 					log("bundle != null");
 
 					// byte[] pictureData = bundle.getByteArray("pictureData");
-					Bitmap image = (Bitmap) bundle.get("data");
+					byte[] dataa = bundle.getByteArray("data");
+					Bitmap image = BitmapFactory.decodeByteArray(dataa, 0, dataa.length);
 					if (image != null)
 					{
 						log("image != null");
