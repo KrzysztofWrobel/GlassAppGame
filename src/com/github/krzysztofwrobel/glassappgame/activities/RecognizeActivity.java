@@ -22,6 +22,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -116,8 +117,20 @@ public class RecognizeActivity extends BaseActivity
 				} else if (status == -1)
 				{
 					// application error (for example timeout)
-					textView.setText("-1" + response);
 					showInfoDialog(0, getString(R.string.timeout));
+				} else if (status == 2)
+				{
+					// application error (for example timeout)
+					showInfoDialog(0, getString(R.string.try_again));
+					new Handler().postDelayed(new Runnable()
+					{
+						
+						@Override
+						public void run()
+						{
+							finish();
+						}
+					}, 1000);
 				} else
 				{
 					// error from api

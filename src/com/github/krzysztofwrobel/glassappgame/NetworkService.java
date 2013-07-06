@@ -77,7 +77,7 @@ public class NetworkService extends IntentService {
 				mLocalBroadcastManager.sendBroadcast(in);
 			} else if (ACTION_CHALLENGE_COMPLETE.equals(action)) {
 				String challenge_id = params.getString("id", "default-random-id");
-				String login = params.getString("login", "ranodom-login");
+				String login = params.getString("login", Integer.toString(System.currentTimeMillis()));
 
 				RewardResponse rewardResponse = service.challenges_complete(login, challenge_id);
 
