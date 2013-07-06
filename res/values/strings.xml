@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GlassAppGame</string>
+    <string name="upload">Upload...</string>
+    <string name="not_connected">No internet connection!</string>
 </resources>

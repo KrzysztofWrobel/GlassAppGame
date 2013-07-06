@@ -14,6 +14,7 @@ public final class R {
         public static final int content=0x7f040000;
         public static final int iv_slide_image=0x7f040003;
         public static final int overlay=0x7f040001;
+        public static final int text=0x7f040005;
         public static final int tv_slide_title=0x7f040004;
         public static final int vp_home_slides=0x7f040002;
     }
@@ -21,8 +22,11 @@ public final class R {
         public static final int content_and_overlay=0x7f020000;
         public static final int home_activity=0x7f020001;
         public static final int home_item_fragment=0x7f020002;
+        public static final int recognize_layout=0x7f020003;
     }
     public static final class string {
         public static final int app_name=0x7f030000;
+        public static final int not_connected=0x7f030002;
+        public static final int upload=0x7f030001;
     }
 }
